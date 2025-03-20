@@ -1,42 +1,236 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* App.css */
+
+/* Reinicio de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Contenedor principal de fondo con animación degradada */
+.background-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+  background-size: 400% 400%;
+  animation: gradientAnimation 8s ease infinite;
+}
+
+/* Animación del fondo degradado */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Contenedor de objetos flotantes */
+.floating-objects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Estilo base para los objetos voladores */
+.flying-object {
+  position: absolute;
+  bottom: -50px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  animation: fly linear infinite;
+}
+
+/* Animación para que los objetos vuelen */
+@keyframes fly {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--moveX, 100px), -100vh) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--moveX, 100px), -120vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Personalización para cada objeto (usando nth-child) */
+.flying-object:nth-child(1) {
+  left: 10%;
+  width: 30px;
+  height: 30px;
+  --moveX: 50px;
+  animation-duration: 12s;
+  animation-delay: 0s;
+}
+
+.flying-object:nth-child(2) {
+  left: 40%;
+  width: 20px;
+  height: 20px;
+  --moveX: -80px;
+  animation-duration: 10s;
+  animation-delay: 2s;
+}
+
+.flying-object:nth-child(3) {
+  left: 70%;
+  width: 25px;
+  height: 25px;
+  --moveX: 100px;
+  animation-duration: 14s;
+  animation-delay: 1s;
+}
+
+.flying-object:nth-child(4) {
+  left: 25%;
+  width: 15px;
+  height: 15px;
+  --moveX: -40px;
+  animation-duration: 9s;
+  animation-delay: 3s;
+}
+
+.flying-object:nth-child(5) {
+  left: 85%;
+  width: 35px;
+  height: 35px;
+  --moveX: -60px;
+  animation-duration: 16s;
+  animation-delay: 0.5s;
+}
+
+/* Contenedor principal centrado */
+.app-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
+  z-index: 1; /* Asegura que el contenido esté por encima de los objetos voladores */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Título */
+.app-title {
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Grupo del input y botón */
+.input-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Input estilizado */
+.input-field {
+  flex: 1;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
-.card {
-  padding: 2em;
+.input-field:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-.read-the-docs {
-  color: #888;
+/* Botones generales */
+.btn {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* Lista de items sin estilo de lista */
+.item-list {
+  list-style: none;
+}
+
+/* Cada item */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Nombre del item */
+.item-name {
+  font-size: 1.2rem;
+}
+
+/* Grupo de botones dentro de cada item */
+.button-group button {
+  margin-left: 10px;
+}
+
+/* Botón para actualizar */
+.update-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.update-btn:hover {
+  background-color: #0069d9;
+  transform: scale(1.05);
+}
+
+/* Botón para eliminar */
+.delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
 }
