@@ -4,9 +4,29 @@ import { db } from './firebaseconfig.jsx';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import './App.css';
 
+function Modal({ title, children, onClose }) {
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <h2 className="modal-title">{title}</h2>
+        {children}
+        <button className="btn modal-close" onClick={onClose}>Cerrar</button>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
+
+  // Estados para modales
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [itemToUpdate, setItemToUpdate] = useState(null);
+  const [updatedName, setUpdatedName] = useState("");
 
   // Referencia a la colección "items"
   const itemsCollectionRef = collection(db, "items");
@@ -56,7 +76,36 @@ function App() {
     }
   };
 
-  // Se ejecuta una vez al cargar el componente para obtener los items existentes
+  // Handlers para el modal de eliminación
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (itemToDelete) {
+      deleteItem(itemToDelete.id);
+      setShowDeleteModal(false);
+      setItemToDelete(null);
+    }
+  };
+
+  // Handlers para el modal de actualización
+  const handleUpdateClick = (item) => {
+    setItemToUpdate(item);
+    setUpdatedName(item.name);
+    setShowUpdateModal(true);
+  };
+
+  const confirmUpdate = () => {
+    if (itemToUpdate && updatedName.trim() !== "") {
+      updateItem(itemToUpdate.id, updatedName);
+      setShowUpdateModal(false);
+      setItemToUpdate(null);
+      setUpdatedName("");
+    }
+  };
+
   useEffect(() => {
     getItems();
   }, []);
@@ -88,15 +137,15 @@ function App() {
               <span className="item-name">{item.name}</span>
               <div className="button-group">
                 <button 
-                  onClick={() => {
-                    const newName = prompt("Ingresa el nuevo nombre:", item.name);
-                    if (newName) updateItem(item.id, newName);
-                  }}
+                  onClick={() => handleUpdateClick(item)}
                   className="btn update-btn"
                 >
                   Actualizar
                 </button>
-                <button onClick={() => deleteItem(item.id)} className="btn delete-btn">
+                <button 
+                  onClick={() => handleDeleteClick(item)}
+                  className="btn delete-btn"
+                >
                   Eliminar
                 </button>
               </div>
@@ -104,6 +153,28 @@ function App() {
           ))}
         </ul>
       </div>
+
+      {/* Modal de eliminación */}
+      {showDeleteModal && (
+        <Modal title="Confirmar Eliminación" onClose={() => setShowDeleteModal(false)}>
+          <p>¿Estás seguro de eliminar el item: <strong>{itemToDelete?.name}</strong>?</p>
+          <button className="btn delete-btn" onClick={confirmDelete}>Sí, eliminar</button>
+        </Modal>
+      )}
+
+      {/* Modal de actualización */}
+      {showUpdateModal && (
+        <Modal title="Actualizar Item" onClose={() => setShowUpdateModal(false)}>
+          <input 
+            type="text"
+            value={updatedName}
+            onChange={(e) => setUpdatedName(e.target.value)}
+            className="input-field"
+            style={{ marginBottom: '10px' }}
+          />
+          <button className="btn update-btn" onClick={confirmUpdate}>Guardar cambios</button>
+        </Modal>
+      )}
     </div>
   );
 }
