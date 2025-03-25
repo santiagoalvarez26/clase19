@@ -1,5 +1,39 @@
-/* App.css */
+/* Contenedor principal para el layout de dos columnas */
+.page-wrapper {
+  display: flex;
+  width: 90%;
+  margin: 20px auto;
+  gap: 20px;
+  align-items: flex-start;
+}
 
+/* Sidebar para los items largos */
+.sidebar {
+  flex: 1;
+  max-width: 300px; /* puedes ajustar este valor */
+  background-color: #fff8e1;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(191, 160, 111, 0.5);
+}
+
+.sidebar-title {
+  font-size: 1.8rem;
+  color: #b8860b;
+  margin-bottom: 15px;
+}
+
+/* Ajustamos el contenedor central para usar el resto del espacio */
+.app-container {
+  flex: 2;
+  background-color: #fff8e1; /* tono claro dorado */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(191, 160, 111, 0.5);
+  text-align: center;
+}
+
+/* Resto de estilos permanecen igual */
 /* Reinicio de márgenes y padding */
 * {
   margin: 0;
@@ -12,28 +46,22 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
-/* Contenedor principal de fondo con animación degradada */
 .background-wrapper {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #ff9a9e);
+  background: linear-gradient(45deg, #bfa06f, #d4af37, #e6c06e, #bfa06f);
   background-size: 400% 400%;
   animation: gradientAnimation 30s ease infinite;
 }
 
-/* Animación del fondo degradado */
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Contenedor de objetos flotantes */
 .floating-objects {
   position: absolute;
   top: 0;
@@ -43,25 +71,21 @@ html, body {
   pointer-events: none;
 }
 
-/* Estilo base para los objetos voladores */
 .flying-object {
   position: absolute;
   bottom: -50px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 215, 0, 0.4);
   border-radius: 50%;
   opacity: 0;
   animation: fly 12s linear infinite;
 }
 
-/* Animación para que los objetos vuelen */
 @keyframes fly {
   0% {
     transform: translate(0, 0) scale(0.5);
     opacity: 0;
   }
-  10% {
-    opacity: 1;
-  }
+  10% { opacity: 1; }
   50% {
     transform: translate(var(--moveX, 100px), -100vh) scale(1);
     opacity: 0.8;
@@ -72,7 +96,6 @@ html, body {
   }
 }
 
-/* Personalización para cada objeto (usando nth-child) */
 .flying-object:nth-child(1) {
   left: 10%;
   width: 30px;
@@ -118,64 +141,32 @@ html, body {
   animation-delay: 0.5s;
 }
 
-/* Cursor personalizado */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid #fff;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, background 0.15s ease;
-  z-index: 9999;
-}
-
-/* Contenedor principal centrado */
-.app-container {
-  width: 100%;
-  max-width: 600px;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  z-index: 1;
-}
-
-/* Título */
 .app-title {
   font-size: 2.5rem;
-  color: #007bff;
+  color: #b8860b;
   margin-bottom: 20px;
 }
 
-/* Grupo del input y botón */
 .input-group {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-/* Input estilizado */
 .input-field {
   flex: 1;
   padding: 12px 15px;
-  border: 2px solid #ddd;
+  border: 2px solid #d4af37;
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
 .input-field:focus {
-  border-color: #007bff;
+  border-color: #b8860b;
   outline: none;
 }
 
-/* Botones generales */
 .btn {
   padding: 12px 15px;
   border: none;
@@ -186,22 +177,20 @@ html, body {
 }
 
 .add-btn {
-  background-color: #28a745;
+  background-color: #d4af37;
   color: #fff;
   margin-left: 10px;
 }
 
 .add-btn:hover {
-  background-color: #218838;
+  background-color: #b8860b;
   transform: scale(1.05);
 }
 
-/* Lista de items sin estilo de lista */
 .item-list {
   list-style: none;
 }
 
-/* Cada item */
 .item {
   display: flex;
   justify-content: space-between;
@@ -210,50 +199,50 @@ html, body {
   margin-bottom: 10px;
   border: 1px solid #eee;
   border-radius: 4px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
 }
 
 .item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(191, 160, 111, 0.3);
 }
 
-/* Nombre del item */
 .item-name {
-  font-size: 1.2rem;
+  flex: 1;
+  color: #8b7500;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Grupo de botones dentro de cada item */
 .button-group button {
   margin-left: 10px;
+  height: 40px;
 }
 
-/* Botón para actualizar */
 .update-btn {
-  background-color: #007bff;
+  background-color: #b8860b;
   color: #fff;
 }
 
 .update-btn:hover {
-  background-color: #0069d9;
+  background-color: #8b7500;
   transform: scale(1.05);
 }
 
-/* Botón para eliminar */
 .delete-btn {
-  background-color: #dc3545;
+  background-color: #a0522d;
   color: #fff;
 }
 
 .delete-btn:hover {
-  background-color: #c82333;
+  background-color: #8b4513;
   transform: scale(1.05);
 }
 
-/* ... (mantén tus estilos existentes) */
-
-/* Estilos para el modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -268,25 +257,28 @@ html, body {
 }
 
 .modal {
-  background: #fff;
+  color: black;
+  background: #fff8e1;
   padding: 20px 30px;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(191, 160, 111, 0.5);
   text-align: center;
   max-width: 90%;
 }
 
 .modal-title {
   font-size: 1.8rem;
-  color: #007bff;
+  color: #b8860b;
   margin-bottom: 15px;
 }
 
 .modal-close {
   margin-top: 15px;
-  background-color: #6c757d;
+  background-color: #d4af37;
+  color: #fff;
 }
 
 .modal-close:hover {
-  background-color: #5a6268;
+  background-color: #b8860b;
+  transform: scale(1.05);
 }
